@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenPOs Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        .header {
+            background: #111;
+            padding: 16px;
+            border-bottom: 1px solid #333;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #fff;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #111;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-tab.active {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .divider {
+            height: 1px;
+            background: #333;
+            margin: 8px 0;
+        }
+
+        .section {
+            padding: 16px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #111;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .search-section {
+            margin-top: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .action-button:hover {
+            background: #444;
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 16px;
+        }
+
+        .po-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .po-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .po-number {
+            font-weight: 600;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .po-status {
+            font-size: 12px;
+            color: #ccc;
+            background: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .po-details {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .po-supplier {
+            margin-bottom: 2px;
+        }
+
+        .po-product {
+            margin-bottom: 2px;
+        }
+
+        .po-dates {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .feed-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .feed-po {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .feed-action {
+            font-size: 12px;
+            color: #ccc;
+            background: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .feed-details {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .feed-timestamp {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .permit-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .permit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .permit-number {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .permit-po {
+            font-size: 12px;
+            color: #ccc;
+            background: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .permit-details {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .assumption-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .assumption-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .assumption-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .assumption-value {
+            font-size: 14px;
+            color: #fff;
+            background: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .error {
+            background: #300;
+            color: #f66;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 16px 0;
+            font-size: 14px;
+            border-left: 4px solid #f66;
+        }
+
+        .success {
+            background: #030;
+            color: #6f6;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 16px 0;
+            font-size: 14px;
+            border-left: 4px solid #6f6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #111;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #333;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .modal-button.primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .modal-button.secondary {
+            background: #333;
+            color: #fff;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            border: 2px solid #333;
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1># OpenPOs Mobile</h1>
+            <div class="subtitle">8 Mobile</div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="nav-tab" onclick="showTab('actions')">Actions</button>
+            <button class="nav-tab" onclick="showTab('feed')">Feed</button>
+            <button class="nav-tab" onclick="showTab('permits')">Permits</button>
+            <button class="nav-tab" onclick="showTab('assumptions')">Assumptions</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="section">
+            <div class="section-title">Dashboard</div>
+            
+            <div class="divider"></div>
+
+            <!-- Quick Stats -->
+            <div class="section-title">Quick Stats</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="open-pos-count">--</div>
+                    <div class="stat-label">Open POS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="today-activity">--</div>
+                    <div class="stat-label">Today's Activity</div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="section-title">Search POs</div>
+                <input type="text" 
+                       class="search-input" 
+                       id="search-input" 
+                       placeholder="Search by POs supplier, product, status...">
+                <button class="search-button" onclick="searchPOs()" id="search-button">
+                    Search
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section">
+                <div id="results-container"></div>
+            </div>
+        </div>
+
+        <!-- Actions Tab -->
+        <div id="actions-tab" class="section hidden">
+            <div class="section-title">PO Actions</div>
+            
+            <button class="action-button" onclick="pullAndSyncAll()">🚀 Pull POs + Create/Update Calendar + Cleanup</button>
+            <button class="action-button" onclick="showCompleteEventModal()">✅ Complete Event</button>
+            <button class="action-button" onclick="showUncompleteEventModal()">↩️ Uncomplete Event</button>
+            <button class="action-button" onclick="showAddCommentModal()">💬 Add Comment to PO</button>
+            <button class="action-button" onclick="showSetFixedDateModal()">📌 Set Fixed Date</button>
+            <button class="action-button" onclick="showClearFixedDateModal()">❌ Clear Fixed Date</button>
+            <button class="action-button" onclick="showAssignPermitModal()">🔢 Assign Permit Number</button>
+            <button class="action-button" onclick="refreshRequirements()">🔄 Refresh Requirements</button>
+            <button class="action-button" onclick="updateEventColors()">🎨 Update Event Colors</button>
+            <button class="action-button" onclick="cleanupCalendar()">🧹 Cleanup Old Calendar Events</button>
+            <button class="action-button" onclick="removeCalendarDuplicates()">🚫 Remove Calendar Duplicates</button>
+            
+            <div class="divider"></div>
+            
+            <div class="section-title">System Actions</div>
+            <button class="action-button" onclick="pullOpenPurchaseOrdersWeb()">📥 Pull Open Purchase Orders</button>
+            <button class="action-button" onclick="syncCalendarEvents()">📅 Create/Update Calendar Events</button>
+            <button class="action-button" onclick="diagnoseIssues()">🔧 Diagnose Pull Issues</button>
+            <button class="action-button" onclick="debugDates()">📅 Debug Date Extraction</button>
+            <button class="action-button" onclick="clearEventIds()">🗑️ Clear Event IDs</button>
+        </div>
+
+        <!-- Feed Tab -->
+        <div id="feed-tab" class="section hidden">
+            <div class="section-title">Activity Feed</div>
+            
+            <button class="search-button" onclick="loadFeed()" style="margin-bottom: 16px;">
+                🔄 Refresh Feed
+            </button>
+
+            <div id="feed-container">
+                <div class="loading">Loading activity feed...</div>
+            </div>
+        </div>
+
+        <!-- Permits Tab -->
+        <div id="permits-tab" class="section hidden">
+            <div class="section-title">Permit Management</div>
+            
+            <button class="search-button" onclick="loadPermits()" style="margin-bottom: 16px;">
+                🔄 Refresh Permits
+            </button>
+
+            <div id="permits-container">
+                <div class="loading">Loading permits...</div>
+            </div>
+        </div>
+
+        <!-- Assumptions Tab -->
+        <div id="assumptions-tab" class="section hidden">
+            <div class="section-title">Timeline Assumptions</div>
+            
+            <button class="search-button" onclick="loadAssumptions()" style="margin-bottom: 16px;">
+                🔄 Refresh Assumptions
+            </button>
+
+            <div id="assumptions-container">
+                <div class="loading">Loading assumptions...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="completeEventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">✅ Complete Event</div>
+            <input type="text" class="modal-input" id="complete-po-number" placeholder="PO Number">
+            <input type="text" class="modal-input" id="complete-milestone" placeholder="Milestone">
+            <input type="text" class="modal-input" id="complete-comments" placeholder="Comments (optional)">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('completeEventModal')">Cancel</button>
+                <button class="modal-button primary" onclick="completeEvent()">Complete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="uncompleteEventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">↩️ Uncomplete Event</div>
+            <input type="text" class="modal-input" id="uncomplete-po-number" placeholder="PO Number">
+            <input type="text" class="modal-input" id="uncomplete-milestone" placeholder="Milestone">
+            <input type="text" class="modal-input" id="uncomplete-reason" placeholder="Reason (optional)">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('uncompleteEventModal')">Cancel</button>
+                <button class="modal-button primary" onclick="uncompleteEvent()">Uncomplete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addCommentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">💬 Add Comment to PO</div>
+            <input type="text" class="modal-input" id="comment-po-number" placeholder="PO Number">
+            <input type="text" class="modal-input" id="comment-text" placeholder="Comment">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('addCommentModal')">Cancel</button>
+                <button class="modal-button primary" onclick="addComment()">Add Comment</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setFixedDateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">📌 Set Fixed Date</div>
+            <input type="text" class="modal-input" id="fixeddate-po-number" placeholder="PO Number">
+            <input type="text" class="modal-input" id="fixeddate-milestone" placeholder="Milestone">
+            <input type="text" class="modal-input" id="fixeddate-date" placeholder="Date (YYYY-MM-DD)">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('setFixedDateModal')">Cancel</button>
+                <button class="modal-button primary" onclick="setFixedDate()">Set Date</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="clearFixedDateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">❌ Clear Fixed Date</div>
+            <input type="text" class="modal-input" id="clearfixeddate-po-number" placeholder="PO Number">
+            <input type="text" class="modal-input" id="clearfixeddate-milestone" placeholder="Milestone">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('clearFixedDateModal')">Cancel</button>
+                <button class="modal-button primary" onclick="clearFixedDate()">Clear Date</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="assignPermitModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">🔢 Assign Permit Number</div>
+            <input type="text" class="modal-input" id="permit-po-number" placeholder="PO Number">
+            <input type="text" class="modal-input" id="permit-number" placeholder="Permit Number">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('assignPermitModal')">Cancel</button>
+                <button class="modal-button primary" onclick="assignPermit()">Assign Permit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="updateAssumptionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">📊 Update Assumption</div>
+            <input type="text" class="modal-input" id="assumption-name" placeholder="Assumption Name" readonly>
+            <input type="number" class="modal-input" id="assumption-value" placeholder="Days">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="hideModal('updateAssumptionModal')">Cancel</button>
+                <button class="modal-button primary" onclick="updateAssumption()">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'dashboard';
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.section').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab and set active
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            event.target.classList.add('active');
+            currentTab = tabName;
+
+            // Load data for specific tabs
+            if (tabName === 'permits') {
+                loadPermits();
+            } else if (tabName === 'feed') {
+                loadFeed();
+            } else if (tabName === 'assumptions') {
+                loadAssumptions();
+            }
+        }
+
+        function searchPOs() {
+            const query = document.getElementById('search-input').value.trim();
+            const searchButton = document.getElementById('search-button');
+            const resultsSection = document.getElementById('results-section');
+            const resultsContainer = document.getElementById('results-container');
+            
+            // Show loading state
+            searchButton.innerHTML = '<div class="spinner"></div>Searching...';
+            searchButton.disabled = true;
+            resultsContainer.innerHTML = '<div class="loading">Searching purchase orders...</div>';
+            resultsSection.style.display = 'block';
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    searchButton.innerHTML = 'Search';
+                    searchButton.disabled = false;
+                    
+                    if (response.success) {
+                        displayResults(response.data, query);
+                        updateStats(response.data);
+                    } else {
+                        showError(response.error || 'Search failed');
+                    }
+                })
+                .withFailureHandler(function(error) {
+                    searchButton.innerHTML = 'Search';
+                    searchButton.disabled = false;
+                    showError('Search failed: ' + error.message);
+                })
+                .apiListPOs(query);
+        }
+
+        function displayResults(pos, query) {
+            const resultsContainer = document.getElementById('results-container');
+            
+            if (!pos || pos.length === 0) {
+                const message = query ? 
+                    `No purchase orders found for "${query}"` : 
+                    'No purchase orders found';
+                resultsContainer.innerHTML = `<div class="empty-state">${message}</div>`;
+                return;
+            }
+            
+            let html = '';
+            
+            pos.forEach(po => {
+                // Display ALL 6 milestones in the results
+                html += `
+                    <div class="po-item">
+                        <div class="po-header">
+                            <div class="po-number">${escapeHtml(po.po)}</div>
+                            <div class="po-status">${escapeHtml(po.status)}</div>
+                        </div>
+                        <div class="po-details">
+                            <div class="po-supplier">${escapeHtml(po.supplier)}</div>
+                            <div class="po-product">${escapeHtml(po.product)}</div>
+                            <div class="po-dates">
+                                <div><strong>Depart Canada:</strong> ${formatDate(po.dates['Depart Canada'])}</div>
+                                <div><strong>Arrive in Aus:</strong> ${formatDate(po.dates['Arrive in Aus'])}</div>
+                                <div><strong>Clears Customs:</strong> ${formatDate(po.dates['Clears Customs'])}</div>
+                                <div><strong>Irradiation:</strong> ${formatDate(po.dates['Irradiation'])}</div>
+                                <div><strong>Testing:</strong> ${formatDate(po.dates['Testing'])}</div>
+                                <div><strong>Packaging & Release:</strong> ${formatDate(po.dates['Packaging and Release'])}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+        }
+
+        function loadPermits() {
+            const permitsContainer = document.getElementById('permits-container');
+            permitsContainer.innerHTML = '<div class="loading">Loading permits...</div>';
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    if (response.success) {
+                        displayPermits(response.data);
+                    } else {
+                        permitsContainer.innerHTML = `<div class="error">${escapeHtml(response.error)}</div>`;
+                    }
+                })
+                .withFailureHandler(function(error) {
+                    permitsContainer.innerHTML = `<div class="error">Failed to load permits: ${escapeHtml(error.message)}</div>`;
+                })
+                .apiGetPermits();
+        }
+
+        function displayPermits(permits) {
+            const permitsContainer = document.getElementById('permits-container');
+            
+            if (!permits || permits.length === 0) {
+                permitsContainer.innerHTML = '<div class="empty-state">No permits found</div>';
+                return;
+            }
+            
+            let html = '';
+            
+            permits.forEach(permit => {
+                html += `
+                    <div class="permit-item">
+                        <div class="permit-header">
+                            <div class="permit-number">${escapeHtml(permit.permitNumber)}</div>
+                            <div class="permit-po">${escapeHtml(permit.poNumber)}</div>
+                        </div>
+                        <div class="permit-details">
+                            <div>Assigned by: ${escapeHtml(permit.assignedBy)}</div>
+                            <div>Date: ${formatDate(permit.timestamp)}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            permitsContainer.innerHTML = html;
+        }
+
+        function loadFeed() {
+            const feedContainer = document.getElementById('feed-container');
+            feedContainer.innerHTML = '<div class="loading">Loading activity feed...</div>';
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    if (response.success) {
+                        displayFeed(response.data);
+                    } else {
+                        feedContainer.innerHTML = `<div class="error">${escapeHtml(response.error)}</div>`;
+                    }
+                })
+                .withFailureHandler(function(error) {
+                    feedContainer.innerHTML = `<div class="error">Failed to load feed: ${escapeHtml(error.message)}</div>`;
+                })
+                .apiGetFeed();
+        }
+
+        function displayFeed(feedItems) {
+            const feedContainer = document.getElementById('feed-container');
+            
+            if (!feedItems || feedItems.length === 0) {
+                feedContainer.innerHTML = '<div class="empty-state">No activity found</div>';
+                return;
+            }
+            
+            let html = '';
+            
+            feedItems.forEach(item => {
+                html += `
+                    <div class="feed-item">
+                        <div class="feed-header">
+                            <div class="feed-po">${escapeHtml(item.poNumber)}</div>
+                            <div class="feed-action">${escapeHtml(item.action)}</div>
+                        </div>
+                        <div class="feed-details">
+                            <div>${escapeHtml(item.description)}</div>
+                            <div class="feed-timestamp">${formatDate(item.timestamp)} • ${escapeHtml(item.user)}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            feedContainer.innerHTML = html;
+        }
+
+        function loadAssumptions() {
+            const assumptionsContainer = document.getElementById('assumptions-container');
+            assumptionsContainer.innerHTML = '<div class="loading">Loading assumptions...</div>';
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    if (response.success) {
+                        displayAssumptions(response.data);
+                    } else {
+                        assumptionsContainer.innerHTML = `<div class="error">${escapeHtml(response.error)}</div>`;
+                    }
+                })
+                .withFailureHandler(function(error) {
+                    assumptionsContainer.innerHTML = `<div class="error">Failed to load assumptions: ${escapeHtml(error.message)}</div>`;
+                })
+                .apiGetAssumptions();
+        }
+
+        function displayAssumptions(assumptions) {
+            const assumptionsContainer = document.getElementById('assumptions-container');
+            
+            if (!assumptions || assumptions.length === 0) {
+                assumptionsContainer.innerHTML = '<div class="empty-state">No assumptions found</div>';
+                return;
+            }
+            
+            let html = '';
+            
+            assumptions.forEach(assumption => {
+                html += `
+                    <div class="assumption-item" onclick="showUpdateAssumptionModal('${escapeHtml(assumption.name)}', ${assumption.value})">
+                        <div class="assumption-header">
+                            <div class="assumption-name">${escapeHtml(assumption.name)}</div>
+                            <div class="assumption-value">${assumption.value} days</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            assumptionsContainer.innerHTML = html;
+        }
+
+        function showUpdateAssumptionModal(name, value) {
+            document.getElementById('assumption-name').value = name;
+            document.getElementById('assumption-value').value = value;
+            showModal('updateAssumptionModal');
+        }
+
+        function updateStats(pos) {
+            document.getElementById('open-pos-count').textContent = pos.length;
+            const today = new Date().toISOString().split('T')[0];
+            const todayActivity = pos.filter(po => 
+                Object.values(po.dates).some(date => date === today)
+            ).length;
+            document.getElementById('today-activity').textContent = todayActivity;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            if (dateString.includes('T')) {
+                // It's a timestamp, format it nicely
+                const date = new Date(dateString);
+                return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            }
+            return dateString;
+        }
+
+        function showError(message) {
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = `<div class="error">${escapeHtml(message)}</div>`;
+        }
+
+        function showSuccess(message) {
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = `<div class="success">${escapeHtml(message)}</div>`;
+        }
+
+        function escapeHtml(unsafe) {
+            if (unsafe === null || unsafe === undefined) return '';
+            return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showCompleteEventModal() { showModal('completeEventModal'); }
+        function showUncompleteEventModal() { showModal('uncompleteEventModal'); }
+        function showAddCommentModal() { showModal('addCommentModal'); }
+        function showSetFixedDateModal() { showModal('setFixedDateModal'); }
+        function showClearFixedDateModal() { showModal('clearFixedDateModal'); }
+        function showAssignPermitModal() { showModal('assignPermitModal'); }
+
+        // Action functions - ALL UPDATED TO USE WEB-COMPATIBLE VERSIONS
+        function completeEvent() {
+            const poNumber = document.getElementById('complete-po-number').value;
+            const milestone = document.getElementById('complete-milestone').value;
+            const comments = document.getElementById('complete-comments').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('completeEventModal');
+                    showSuccess(`Event completed: ${milestone} for PO ${poNumber}`);
+                    searchPOs(); // Refresh the list
+                })
+                .withFailureHandler(function(error) {
+                    showError('Complete event failed: ' + error.message);
+                })
+                .completeEvent(poNumber, milestone, comments);
+        }
+
+        function uncompleteEvent() {
+            const poNumber = document.getElementById('uncomplete-po-number').value;
+            const milestone = document.getElementById('uncomplete-milestone').value;
+            const reason = document.getElementById('uncomplete-reason').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('uncompleteEventModal');
+                    showSuccess(`Event uncompleted: ${milestone} for PO ${poNumber}`);
+                    searchPOs(); // Refresh the list
+                })
+                .withFailureHandler(function(error) {
+                    showError('Uncomplete event failed: ' + error.message);
+                })
+                .uncompleteEvent(poNumber, milestone, reason);
+        }
+
+        function addComment() {
+            const poNumber = document.getElementById('comment-po-number').value;
+            const comment = document.getElementById('comment-text').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('addCommentModal');
+                    showSuccess(`Comment added to PO ${poNumber}`);
+                })
+                .withFailureHandler(function(error) {
+                    showError('Add comment failed: ' + error.message);
+                })
+                .addCommentToPO(poNumber, comment);
+        }
+
+        function setFixedDate() {
+            const poNumber = document.getElementById('fixeddate-po-number').value;
+            const milestone = document.getElementById('fixeddate-milestone').value;
+            const date = document.getElementById('fixeddate-date').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('setFixedDateModal');
+                    showSuccess(`Fixed date set: ${milestone} for PO ${poNumber}`);
+                    searchPOs(); // Refresh the list
+                })
+                .withFailureHandler(function(error) {
+                    showError('Set fixed date failed: ' + error.message);
+                })
+                .setFixedDate(poNumber, milestone, date);
+        }
+
+        function clearFixedDate() {
+            const poNumber = document.getElementById('clearfixeddate-po-number').value;
+            const milestone = document.getElementById('clearfixeddate-milestone').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('clearFixedDateModal');
+                    showSuccess(`Fixed date cleared: ${milestone} for PO ${poNumber}`);
+                    searchPOs(); // Refresh the list
+                })
+                .withFailureHandler(function(error) {
+                    showError('Clear fixed date failed: ' + error.message);
+                })
+                .clearFixedDate(poNumber, milestone);
+        }
+
+        function assignPermit() {
+            const poNumber = document.getElementById('permit-po-number').value;
+            const permitNumber = document.getElementById('permit-number').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('assignPermitModal');
+                    showSuccess(`Permit ${permitNumber} assigned to PO ${poNumber}`);
+                    loadPermits(); // Refresh permits list
+                })
+                .withFailureHandler(function(error) {
+                    showError('Assign permit failed: ' + error.message);
+                })
+                .assignPermitNumber(poNumber, permitNumber);
+        }
+
+        function updateAssumption() {
+            const name = document.getElementById('assumption-name').value;
+            const value = document.getElementById('assumption-value').value;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    hideModal('updateAssumptionModal');
+                    showSuccess(`Assumption updated: ${name} = ${value} days`);
+                    loadAssumptions(); // Refresh assumptions list
+                    searchPOs(); // Refresh POs to recalculate dates
+                })
+                .withFailureHandler(function(error) {
+                    showError('Update assumption failed: ' + error.message);
+                })
+                .apiUpdateAssumption(name, value);
+        }
+
+        function refreshRequirements() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Requirements refreshed successfully');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Refresh requirements failed: ' + error.message);
+                })
+                .refreshRequirements();
+        }
+
+        function updateEventColors() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Event colors updated successfully');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Update event colors failed: ' + error.message);
+                })
+                .updateEventColors();
+        }
+
+        function cleanupCalendar() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Calendar cleanup completed');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Calendar cleanup failed: ' + error.message);
+                })
+                .cleanupCalendar();
+        }
+
+        function removeCalendarDuplicates() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Calendar duplicates removed');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Remove duplicates failed: ' + error.message);
+                })
+                .removeCalendarDuplicates();
+        }
+
+        function pullOpenPurchaseOrdersWeb() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Purchase orders pulled successfully');
+                    searchPOs(); // Refresh the list
+                })
+                .withFailureHandler(function(error) {
+                    showError('Pull POs failed: ' + error.message);
+                })
+                .pullOpenPurchaseOrdersWeb();
+        }
+
+        function syncCalendarEvents() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Calendar events synced successfully');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Sync calendar failed: ' + error.message);
+                })
+                .syncCalendarEvents();
+        }
+
+        function diagnoseIssues() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Diagnosis completed - check console for details');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Diagnosis failed: ' + error.message);
+                })
+                .diagnoseIssues();
+        }
+
+        function debugDates() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Date debugging completed - check console for details');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Date debug failed: ' + error.message);
+                })
+                .debugDates();
+        }
+
+        function clearEventIds() {
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    showSuccess('Event IDs cleared successfully');
+                })
+                .withFailureHandler(function(error) {
+                    showError('Clear event IDs failed: ' + error.message);
+                })
+                .clearEventIds();
+        }
+
+        function pullAndSyncAll() {
+            const searchButton = document.getElementById('search-button');
+            searchButton.innerHTML = '<div class="spinner"></div>Syncing...';
+            searchButton.disabled = true;
+            
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    searchButton.innerHTML = 'Search';
+                    searchButton.disabled = false;
+                    searchPOs();
+                    showSuccess('Full sync completed successfully');
+                })
+                .withFailureHandler(function(error) {
+                    searchButton.innerHTML = 'Search';
+                    searchButton.disabled = false;
+                    showError('Sync failed: ' + error.message);
+                })
+                .pullAndSyncAll();
+        }
+
+        // Load all POs on startup
+        document.addEventListener('DOMContentLoaded', function() {
+            searchPOs();
+            
+            // Handle Enter key in search
+            document.getElementById('search-input').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    searchPOs();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
